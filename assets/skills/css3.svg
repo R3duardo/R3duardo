@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <style>
+    .c3-rise { animation: c3-rise 4s ease-in-out infinite; }
+    .c3-wave { animation: c3-wave 1.2s linear infinite; }
+    .c3-liquid { animation: c3-liquid 4s ease-in-out infinite; }
+    .c3-base { opacity: .28; }
+    @keyframes c3-rise {
+      0% { transform: translateY(138px); }
+      58%, 100% { transform: translateY(-8px); }
+    }
+    @keyframes c3-wave {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-40px); }
+    }
+    @keyframes c3-liquid {
+      0%, 86% { opacity: 1; }
+      99%, 100% { opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .c3-rise, .c3-wave, .c3-liquid { animation: none; }
+      .c3-rise { transform: translateY(-8px); }
+    }
+  </style>
+  <defs>
+    <mask id="c3-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="128" height="128">
+      <g class="c3-rise">
+        <g class="c3-wave">
+          <path fill="#fff" d="M-40 0q10 -6 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0V150H-40z"/>
+        </g>
+      </g>
+    </mask>
+  </defs>
+  <path class="c3-base" fill="#1572B6" d="M18.814 114.123L8.76 1.352h110.48l-10.064 112.754-45.243 12.543-45.119-12.526z"/>
+  <g class="c3-liquid" mask="url(#c3-mask)">
+    <path fill="#1572B6" d="M18.814 114.123L8.76 1.352h110.48l-10.064 112.754-45.243 12.543-45.119-12.526z"/>
+    <path fill="#33A9DC" d="M64.001 117.062l36.559-10.136 8.601-96.354h-45.16v106.49z"/>
+  </g>
+  <path fill="#fff" d="M64.001 51.429h18.302l1.264-14.163H64.001V23.435h34.682l-.332 3.711-3.4 38.114h-30.95V51.429z"/>
+  <path fill="#EBEBEB" d="M64.083 87.349l-.061.018-15.403-4.159-.985-11.031H33.752l1.937 21.717 28.331 7.863.063-.018v-14.39z"/>
+  <path fill="#fff" d="M81.127 64.675l-1.666 18.522-15.426 4.164v14.39l28.354-7.858.208-2.337 2.406-26.881H81.127z"/>
+  <path fill="#EBEBEB" d="M64.048 23.435v13.831H30.64l-.277-3.108-.63-7.012-.331-3.711h34.646zm-.047 27.996v13.831H48.792l-.277-3.108-.631-7.012-.33-3.711h16.447z"/>
+</svg>

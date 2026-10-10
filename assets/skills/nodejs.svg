@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <style>
+    .nj-logo { transform-origin: 64px 64px; }
+    .nj-ring { fill: none; stroke: #b9f27c; stroke-width: 3.5; stroke-linejoin: round; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; opacity: 0; }
+    .nj-spark { fill: #fff; opacity: 0; }
+    @keyframes nj-pulse {
+      0%, 8% { transform: scale(1); }
+      45% { transform: scale(1.07); }
+      60%, 100% { transform: scale(1); }
+    }
+    @keyframes nj-draw {
+      0% { stroke-dashoffset: 1; opacity: 1; }
+      45% { stroke-dashoffset: 0; opacity: 1; }
+      72% { stroke-dashoffset: 0; opacity: 1; }
+      92%, 100% { stroke-dashoffset: 0; opacity: 0; }
+    }
+    @keyframes nj-spin {
+      0% { stroke-dashoffset: 0; opacity: 0; }
+      50% { opacity: 0; }
+      55% { opacity: .9; }
+      100% { stroke-dashoffset: -1; opacity: .9; }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .nj-logo { animation: nj-pulse 4s ease-in-out infinite; }
+      .nj-ring { animation: nj-draw 4s ease-in-out infinite; }
+    }
+  </style>
+  <defs><linearGradient id="nj-a" x1="34.513" x2="27.157" y1="15.535" y2="30.448" gradientTransform="translate(-129.242 -73.715) scale(6.18523)" gradientUnits="userSpaceOnUse"><stop stop-color="#3F873F"/><stop offset=".33" stop-color="#3F8B3D"/><stop offset=".637" stop-color="#3E9638"/><stop offset=".934" stop-color="#3DA92E"/><stop offset="1" stop-color="#3DAE2B"/></linearGradient><linearGradient id="nj-b" x1="30.009" x2="50.533" y1="23.359" y2="8.288" gradientTransform="translate(-129.242 -73.715) scale(6.18523)" gradientUnits="userSpaceOnUse"><stop offset=".138" stop-color="#3F873F"/><stop offset=".402" stop-color="#52A044"/><stop offset=".713" stop-color="#64B749"/><stop offset=".908" stop-color="#6ABF4B"/></linearGradient><linearGradient id="nj-c" x1="21.917" x2="40.555" y1="22.261" y2="22.261" gradientTransform="translate(-129.242 -73.715) scale(6.18523)" gradientUnits="userSpaceOnUse"><stop offset=".092" stop-color="#6ABF4B"/><stop offset=".287" stop-color="#64B749"/><stop offset=".598" stop-color="#52A044"/><stop offset=".862" stop-color="#3F873F"/></linearGradient></defs>
+  <g class="nj-logo">
+    <path fill="url(#nj-a)" d="M66.958.825a6.07 6.07 0 0 0-6.035 0L11.103 29.76c-1.895 1.072-2.96 3.095-2.96 5.24v57.988c0 2.143 1.183 4.167 2.958 5.24l49.82 28.934a6.07 6.07 0 0 0 6.036 0l49.82-28.935c1.894-1.072 2.958-3.096 2.958-5.24V35c0-2.144-1.183-4.167-2.958-5.24z"/><path fill="url(#nj-b)" d="M116.897 29.76 66.841.825A8.161 8.161 0 0 0 65.302.23L9.21 96.798a6.251 6.251 0 0 0 1.657 1.43l50.057 28.934c1.42.833 3.076 1.072 4.615.595l52.66-96.925a3.702 3.702 0 0 0-1.302-1.072z"/><path fill="url(#nj-c)" d="M116.898 98.225c1.42-.833 2.485-2.262 2.958-3.81L65.066.108c-1.42-.238-2.959-.119-4.26.715L11.104 29.639l53.606 98.355c.71-.12 1.54-.358 2.25-.715z"/>
+    <path class="nj-ring" pathLength="1" d="M64 5 L115 34 L115 94 L64 123 L13 94 L13 34 Z"/>
+  </g>
+</svg>
