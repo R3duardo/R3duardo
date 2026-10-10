@@ -1,10 +1,13 @@
-"""Generate a Pikachu-eats-your-contributions animated SVG (dark + light).
+"""Generate a Pikachu-turns-your-contributions-red animated SVG (dark + light).
 
 Pikachu runs the contribution grid boustrophedon (row 0 left->right, row 1
-right->left, ...). Every non-empty cell it passes flashes electric yellow and
-then turns into the empty colour. After the run there is a short pause, the
-grid resets and the loop starts again. Only CSS animations are used, so the
-SVG keeps animating inside an <img> on GitHub (no JS, no external resources).
+right->left, ...). The graph starts in GitHub's green palette. Every non-empty
+cell Pikachu passes is charged: it flashes electric yellow and then turns red
+at the same intensity level (empty cells stay empty). Once the run is done the
+fully red graph is held for a couple of seconds, then the cells fade back to
+green (via the empty colour) and the loop starts again. Only CSS animations are
+used, so the SVG keeps animating inside an <img> on GitHub (no JS, no external
+resources).
 
 Usage:
     python scripts/pokemon_contrib.py --user R3duardo --out-dir dist
@@ -35,7 +38,7 @@ STEP = CELL + GAP
 RADIUS = 2
 ROWS = 7
 
-PX = 1.8                      # Pikachu pixel size (16x14 sprite -> ~29x25px)
+PX = 1.8                      # Pikachu pixel size (sprite size = WIDTH/HEIGHT * PX)
 SPRITE_W = PIKA_W * PX
 SPRITE_H = PIKA_H * PX
 FEET_OVERLAP = 3              # how far the feet dip into the current row
@@ -45,17 +48,25 @@ PAD_TOP = int(SPRITE_H - FEET_OVERLAP) + 6
 PAD_BOTTOM = 8
 
 DURATION = 30.0               # seconds per loop
-RUN_END = 90.0                # % of the loop spent running the grid
-FLASH = 0.9                   # % the eaten cell stays electric yellow
-FADE = 0.6                    # % to fade from yellow to the empty colour
-RESET_START = 93.5            # % grid starts fading back in
-RESET_END = 97.0              # % grid fully restored
+RUN_END = 84.0                # % of the loop spent running the grid (~25s)
+FLASH = 0.9                   # % a charged cell stays electric yellow
+FADE = 0.7                    # % to fade from yellow to red
+RESET_START = 92.0            # % red graph starts fading back to green
+RESET_MID = 94.0              # % cells pass through the empty colour (no muddy red/green mix)
+RESET_END = 96.0              # % grid fully green again (red held ~2s before)
 
-ELECTRIC = "#ffde00"
+ELECTRIC = "#facc15"
+GLOW = "#fb923c"              # orange rim on the brightest red level
+GLOW_OPACITY = 0.6
 
+# index 0 = empty colour, 1..4 = contribution level
 PALETTES = {
     "dark": ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
     "light": ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
+}
+RED_PALETTES = {
+    "dark": ["#161b22", "#5c1010", "#991b1b", "#dc2626", "#f87171"],
+    "light": ["#ebedf0", "#fecaca", "#f87171", "#dc2626", "#991b1b"],
 }
 SPARK_STROKE = {"dark": "#fff6a8", "light": "#9a7b00"}
 
@@ -169,7 +180,7 @@ def path_times(pts):
     return [d / total * RUN_END for d in dist], total
 
 
-def eat_percent(row, col, pts, times):
+def hit_percent(row, col, pts, times):
     """Loop % when Pikachu's centre passes over the centre of (row, col)."""
     x = _cx(col)
     y = _pika_y(row)
@@ -197,6 +208,7 @@ SPARK = (
 
 def render(cells, theme, user):
     palette = PALETTES[theme]
+    reds = RED_PALETTES[theme]
     empty = palette[0]
     ncols = (max(c for _, c in cells) + 1) if cells else 53
 
@@ -216,23 +228,30 @@ def render(cells, theme, user):
     for (row, col), level in sorted(cells.items()):
         x, y = _cell_x(col), _cell_y(row)
         fill = palette[level]
+        red = reds[level]
         attrs = (
             f'x="{x}" y="{y}" width="{CELL}" height="{CELL}" '
             f'rx="{RADIUS}" ry="{RADIUS}" fill="{fill}"'
         )
-        p = eat_percent(row, col, pts, times) if level > 0 else None
+        p = hit_percent(row, col, pts, times) if level > 0 else None
         if p is None:
             rects.append(f"<rect {attrs}/>")
             continue
         n += 1
         name = f"k{n}"
+        glow = level == 4
+        off = ";stroke-opacity:0" if glow else ""
+        on = f";stroke-opacity:{GLOW_OPACITY}" if glow else ""
         css.append(
             f"@keyframes {name}{{"
-            f"0%,{_pct(p)}{{fill:{fill}}}"
-            f"{_pct(p + 0.05)},{_pct(p + FLASH)}{{fill:{ELECTRIC}}}"
-            f"{_pct(p + FLASH + FADE)},{_pct(RESET_START)}{{fill:{empty}}}"
-            f"{_pct(RESET_END)},100%{{fill:{fill}}}}}"
+            f"0%,{_pct(p)}{{fill:{fill}{off}}}"
+            f"{_pct(p + 0.05)},{_pct(p + FLASH)}{{fill:{ELECTRIC}{off}}}"
+            f"{_pct(p + FLASH + FADE)},{_pct(RESET_START)}{{fill:{red}{on}}}"
+            f"{_pct(RESET_MID)}{{fill:{empty}{off}}}"
+            f"{_pct(RESET_END)},100%{{fill:{fill}{off}}}}}"
         )
+        if glow:
+            attrs += f' stroke="{GLOW}" stroke-width="1.2" stroke-opacity="0"'
         rects.append(f'<rect class="c" style="animation-name:{name}" {attrs}/>')
 
     # Pikachu movement (outer group) and facing (inner group).
@@ -286,9 +305,9 @@ def render(cells, theme, user):
     return (
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
         f'viewBox="0 0 {width} {height}">'
-        f"<title>{user}'s contributions eaten by Pikachu</title>"
+        f"<title>{user}'s contributions turned red by Pikachu</title>"
         f"<desc>Animated contribution graph: Pikachu runs over the grid and "
-        f"zaps every day with contributions.</desc>"
+        f"charges every day with contributions, turning it from green to red.</desc>"
         f"<style>{''.join(css)}</style>"
         f'<g shape-rendering="geometricPrecision">{"".join(rects)}</g>'
         f"{pika}"
