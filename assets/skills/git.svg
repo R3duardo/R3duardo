@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <style>
+    .gt-dia { fill: #F34F29; }
+    .gt-l1, .gt-l2, .gt-l3 { fill: none; stroke: #fff; stroke-width: 7; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+    .gt-d { fill: #fff; stroke: #F34F29; stroke-width: 3.5; transform-box: fill-box; transform-origin: center; }
+    @keyframes gt-l1 { 0%, 4% { stroke-dashoffset: 1; } 22%, 100% { stroke-dashoffset: 0; } }
+    @keyframes gt-l2 { 0%, 22% { stroke-dashoffset: 1; } 40%, 100% { stroke-dashoffset: 0; } }
+    @keyframes gt-l3 { 0%, 40% { stroke-dashoffset: 1; } 58%, 100% { stroke-dashoffset: 0; } }
+    @keyframes gt-pop1 { 0%, 3% { transform: scale(0); } 10% { transform: scale(1.35); } 15%, 100% { transform: scale(1); } }
+    @keyframes gt-pop2 { 0%, 21% { transform: scale(0); } 28% { transform: scale(1.35); } 33%, 100% { transform: scale(1); } }
+    @keyframes gt-pop3 { 0%, 57% { transform: scale(0); } 64% { transform: scale(1.35); } 69%, 100% { transform: scale(1); } }
+    @keyframes gt-out { 0%, 90% { opacity: 1; } 97%, 100% { opacity: 0; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .gt-all { animation: gt-out 5s linear infinite; }
+      .gt-l1 { animation: gt-l1 5s ease-in-out infinite; }
+      .gt-l2 { animation: gt-l2 5s ease-in-out infinite; }
+      .gt-l3 { animation: gt-l3 5s ease-in-out infinite; }
+      .gt-d1 { animation: gt-pop1 5s ease-out infinite; }
+      .gt-d2 { animation: gt-pop2 5s ease-out infinite; }
+      .gt-d3 { animation: gt-pop3 5s ease-out infinite; }
+    }
+  </style>
+  <rect class="gt-dia" x="21" y="21" width="86" height="86" rx="10" transform="rotate(45 64 64)"/>
+  <g class="gt-all">
+    <path class="gt-l1" pathLength="1" d="M64 90 V54"/>
+    <path class="gt-l2" pathLength="1" d="M64 54 L50 40"/>
+    <path class="gt-l3" pathLength="1" d="M64 54 L88 78"/>
+    <circle class="gt-d gt-d1" cx="64" cy="90" r="8.5"/>
+    <circle class="gt-d gt-d2" cx="50" cy="40" r="8.5"/>
+    <circle class="gt-d gt-d3" cx="88" cy="78" r="8.5"/>
+  </g>
+</svg>

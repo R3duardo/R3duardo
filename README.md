@@ -43,8 +43,100 @@ export default {
 ## 🛠️ Tech stack
 
 <div align="center">
-  <img src="./assets/skills.svg" width="100%" alt="HTML5, CSS3, JavaScript, TypeScript, React, Angular, Next.js, Tailwind, Astro, .NET, Node.js, Express, SQL, MongoDB, C#, Python, PHP, Bash, Git, GitHub, Docker"/>
-  <p><i>Constantly learning new technologies! 🚀</i></p>
+<table>
+  <tr>
+    <td align="center" width="96">
+      <img src="./assets/skills/html5.svg" width="65" height="65" alt="HTML5"/>
+      <br/><sub><b>HTML5</b></sub>
+    </td>
+    <td align="center" width="96">
+      <img src="./assets/skills/css3.svg" width="65" height="65" alt="CSS3"/>
+      <br/><sub><b>CSS3</b></sub>
+    </td>
+    <td align="center" width="96">
+      <img src="https://techstack-generator.vercel.app/js-icon.svg" width="65" height="65" alt="JavaScript"/>
+      <br/><sub><b>JavaScript</b></sub>
+    </td>
+    <td align="center" width="96">
+      <img src="https://techstack-generator.vercel.app/ts-icon.svg" width="65" height="65" alt="TypeScript"/>
+      <br/><sub><b>TypeScript</b></sub>
+    </td>
+    <td align="center" width="96">
+      <img src="https://techstack-generator.vercel.app/react-icon.svg" width="65" height="65" alt="React"/>
+      <br/><sub><b>React</b></sub>
+    </td>
+    <td align="center" width="96">
+      <img src="./assets/skills/angular.svg" width="65" height="65" alt="Angular"/>
+      <br/><sub><b>Angular</b></sub>
+    </td>
+    <td align="center" width="96">
+      <img src="./assets/skills/nextjs.svg" width="65" height="65" alt="Next.js"/>
+      <br/><sub><b>Next.js</b></sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="96">
+      <img src="./assets/skills/tailwind.svg" width="65" height="65" alt="Tailwind"/>
+      <br/><sub><b>Tailwind</b></sub>
+    </td>
+    <td align="center" width="96">
+      <img src="./assets/skills/astro.svg" width="65" height="65" alt="Astro"/>
+      <br/><sub><b>Astro</b></sub>
+    </td>
+    <td align="center" width="96">
+      <img src="./assets/skills/dotnet.svg" width="65" height="65" alt=".NET"/>
+      <br/><sub><b>.NET</b></sub>
+    </td>
+    <td align="center" width="96">
+      <img src="./assets/skills/nodejs.svg" width="65" height="65" alt="Node.js"/>
+      <br/><sub><b>Node.js</b></sub>
+    </td>
+    <td align="center" width="96">
+      <img src="./assets/skills/express.svg" width="65" height="65" alt="Express"/>
+      <br/><sub><b>Express</b></sub>
+    </td>
+    <td align="center" width="96">
+      <img src="https://techstack-generator.vercel.app/mysql-icon.svg" width="65" height="65" alt="SQL"/>
+      <br/><sub><b>SQL</b></sub>
+    </td>
+    <td align="center" width="96">
+      <img src="./assets/skills/mongodb.svg" width="65" height="65" alt="MongoDB"/>
+      <br/><sub><b>MongoDB</b></sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="96">
+      <img src="https://techstack-generator.vercel.app/csharp-icon.svg" width="65" height="65" alt="C#"/>
+      <br/><sub><b>C#</b></sub>
+    </td>
+    <td align="center" width="96">
+      <img src="https://techstack-generator.vercel.app/python-icon.svg" width="65" height="65" alt="Python"/>
+      <br/><sub><b>Python</b></sub>
+    </td>
+    <td align="center" width="96">
+      <img src="./assets/skills/php.svg" width="65" height="65" alt="PHP"/>
+      <br/><sub><b>PHP</b></sub>
+    </td>
+    <td align="center" width="96">
+      <img src="./assets/skills/bash.svg" width="65" height="65" alt="Bash"/>
+      <br/><sub><b>Bash</b></sub>
+    </td>
+    <td align="center" width="96">
+      <img src="./assets/skills/git.svg" width="65" height="65" alt="Git"/>
+      <br/><sub><b>Git</b></sub>
+    </td>
+    <td align="center" width="96">
+      <img src="https://techstack-generator.vercel.app/github-icon.svg" width="65" height="65" alt="GitHub"/>
+      <br/><sub><b>GitHub</b></sub>
+    </td>
+    <td align="center" width="96">
+      <img src="https://techstack-generator.vercel.app/docker-icon.svg" width="65" height="65" alt="Docker"/>
+      <br/><sub><b>Docker</b></sub>
+    </td>
+  </tr>
+</table>
+
+<i>Constantly learning new technologies! 🚀</i>
 </div>
 <!-- SKILLS:END -->
 

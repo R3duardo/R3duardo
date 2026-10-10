@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <style>
+    .h5-outline { fill: none; stroke: #E44D26; stroke-width: 3; stroke-linejoin: round; stroke-dasharray: 100 100; stroke-dashoffset: 0; animation: h5-draw 4s ease-in-out infinite; }
+    .h5-fill { animation: h5-fill 4s ease-in-out infinite; }
+    .h5-mark { transform-box: fill-box; transform-origin: center; animation: h5-pop 4s ease-out infinite; }
+    @keyframes h5-draw {
+      0% { stroke-dashoffset: 100; opacity: 1; }
+      32%, 88% { stroke-dashoffset: 0; opacity: 1; }
+      100% { stroke-dashoffset: 0; opacity: 0; }
+    }
+    @keyframes h5-fill {
+      0%, 28% { opacity: 0; }
+      42%, 88% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    @keyframes h5-pop {
+      0%, 38% { opacity: 0; transform: translateY(8px) scale(.9); }
+      54%, 88% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(0) scale(1); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .h5-outline, .h5-fill, .h5-mark { animation: none; }
+    }
+  </style>
+  <g class="h5-fill">
+    <path fill="#E44D26" d="M19.037 113.876L9.032 1.661h109.936l-10.016 112.198-45.019 12.48z"/>
+    <path fill="#F16529" d="M64 116.8l36.378-10.086 8.559-95.878H64z"/>
+  </g>
+  <g class="h5-mark">
+    <path fill="#EBEBEB" d="M64 52.455H45.788L44.53 38.361H64V24.599H29.489l.33 3.692 3.382 37.927H64zm0 35.743l-.061.017-15.327-4.14-.979-10.975H33.816l1.928 21.609 28.193 7.826.063-.017z"/>
+    <path fill="#fff" d="M63.952 52.455v13.763h16.947l-1.597 17.849-15.35 4.143v14.319l28.215-7.82.207-2.325 3.234-36.233.335-3.696h-3.708zm0-27.856v13.762h33.244l.276-3.092.628-6.978.329-3.692z"/>
+  </g>
+  <path class="h5-outline" pathLength="100" d="M19.037 113.876L9.032 1.661h109.936l-10.016 112.198-45.019 12.48z"/>
+</svg>

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <style>
+    .sh-hex { fill: #293138; stroke: #4FA847; stroke-width: 5; stroke-linejoin: round; }
+    .sh-s, .sh-b1, .sh-b2 { fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+    .sh-s { stroke-width: 5; }
+    .sh-b1, .sh-b2 { stroke: #c9d1d9; stroke-width: 6; }
+    .sh-cur { fill: #4FA847; }
+    .sh-cursor { display: none; }
+    @keyframes sh-dollar {
+      0%, 4% { stroke-dashoffset: 1; }
+      22%, 100% { stroke-dashoffset: 0; }
+    }
+    @keyframes sh-b1 {
+      0%, 24% { stroke-dashoffset: 1; }
+      44%, 100% { stroke-dashoffset: 0; }
+    }
+    @keyframes sh-b2 {
+      0%, 46% { stroke-dashoffset: 1; }
+      64%, 100% { stroke-dashoffset: 0; }
+    }
+    @keyframes sh-move {
+      0%, 4% { transform: translateX(0); }
+      4.1%, 24% { transform: translateX(0); }
+      44% { transform: translateX(25px); }
+      64%, 100% { transform: translateX(45px); }
+    }
+    @keyframes sh-blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+    @keyframes sh-fade {
+      0%, 92% { opacity: 1; }
+      99%, 100% { opacity: 0; }
+    }
+    @keyframes sh-ring {
+      0%, 100% { stroke: #4FA847; }
+      70% { stroke: #7fd873; }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .sh-prompt { animation: sh-fade 4s linear infinite; }
+      .sh-s { animation: sh-dollar 4s ease-out infinite; }
+      .sh-b1 { animation: sh-b1 4s steps(4, end) infinite; }
+      .sh-b2 { animation: sh-b2 4s steps(4, end) infinite; }
+      .sh-cursor { display: inline; animation: sh-move 4s steps(4, end) infinite; }
+      .sh-cur { animation: sh-blink .8s steps(1, end) infinite; }
+      .sh-hex { animation: sh-ring 4s ease-in-out infinite; }
+    }
+  </style>
+  <path class="sh-hex" d="M64 6 L114 35 L114 93 L64 122 L14 93 L14 35 Z"/>
+  <g class="sh-prompt">
+    <path class="sh-s" pathLength="1" d="M42 54 C41 47 27 47 27 55 C27 63 42 63 42 72 C42 80 27 80 26 73"/>
+    <path class="sh-s" pathLength="1" d="M34.5 42 V86"/>
+    <path class="sh-b1" pathLength="1" d="M53 64 H73"/>
+    <path class="sh-b2" pathLength="1" d="M79 64 H93"/>
+    <g class="sh-cursor"><rect class="sh-cur" x="52" y="52" width="9" height="24" rx="1.5"/></g>
+  </g>
+</svg>
