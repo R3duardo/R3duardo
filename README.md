@@ -9,7 +9,7 @@
   <p>
     <a href="https://reduardo.netlify.app/"><img src="https://img.shields.io/badge/Portfolio-reduardo.netlify.app-ffde00?style=for-the-badge&logo=netlify&logoColor=black&labelColor=0d1117" alt="Portfolio"/></a>
     <a href="mailto:emozp@hotmail.com"><img src="https://img.shields.io/badge/Email-emozp@hotmail.com-1f6feb?style=for-the-badge&logo=maildotru&logoColor=white&labelColor=0d1117" alt="Email"/></a>
-    <img src="https://komarev.com/ghpvc/?username=R3duardo&label=Profile%20views&color=ffde00&style=for-the-badge" alt="Profile views"/>
+    <img src="https://hits.sh/github.com/R3duardo.svg?style=for-the-badge&label=Profile%20views&color=ffde00&labelColor=0d1117" alt="Profile views"/>
   </p>
 </div>
 <!-- HEADER:END -->
