@@ -38,7 +38,7 @@ STEP = CELL + GAP
 RADIUS = 2
 ROWS = 7
 
-PX = 1.8                      # Pikachu pixel size (sprite size = WIDTH/HEIGHT * PX)
+PX = 1.0                      # Pikachu pixel size (sprite size = WIDTH/HEIGHT * PX)
 SPRITE_W = PIKA_W * PX
 SPRITE_H = PIKA_H * PX
 FEET_OVERLAP = 3              # how far the feet dip into the current row
