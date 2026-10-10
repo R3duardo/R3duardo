@@ -1,9 +1,9 @@
 <!-- HEADER:START -->
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:dc2626,50:f97316,100:facc15&height=200&section=header&text=Eduardo%20Montes%20de%20Oca&fontSize=42&fontColor=ffffff&stroke=7f1d1d&strokeWidth=1&fontAlignY=36&desc=Full%20Stack%20Developer&descSize=18&descAlignY=56&animation=fadeIn" width="100%" alt="Header banner"/>
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:dc2626,50:f97316,100:facc15&height=200&section=header&text=Reduardo&fontSize=56&fontColor=ffffff&stroke=7f1d1d&strokeWidth=1&fontAlignY=36&desc=Full%20Stack%20Developer&descSize=18&descAlignY=56&animation=fadeIn" width="100%" alt="Header banner"/>
 
   <a href="https://github.com/DenverCoder1/readme-typing-svg">
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&pause=1000&color=F97316&center=true&vCenter=true&width=640&lines=Hi+there!+I'm+Eduardo+%F0%9F%91%8B;Full+Stack+Developer;I+build+amazing+things+for+the+web;Custom+Odoo+modules+%7C+Python+%7C+.NET;Gotta+code+'em+all!+%E2%9A%A1" alt="Typing SVG"/>
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&pause=1000&color=F97316&center=true&vCenter=true&width=640&lines=Hi+there!+I'm+Reduardo+%F0%9F%91%8B;Full+Stack+Developer;I+build+amazing+things+for+the+web;Custom+Odoo+modules+%7C+Python+%7C+.NET;Gotta+code+'em+all!+%E2%9A%A1" alt="Typing SVG"/>
   </a>
 
   <p>
@@ -21,7 +21,7 @@
 
 ```js
 export default {
-  name: "Eduardo Montes de Oca Zatarain",
+  name: "Reduardo",
   role: "Full Stack Developer",
   experience: "Coding for 5+ years",
   currentlyBuilding: ["Custom Odoo modules (invoicing, ticket printing, UI)", "School payments app"],
