@@ -31,7 +31,7 @@ ASSETS = os.path.join(ROOT, "assets")
 # ---------------------------------------------------------------- run strip
 W, H = 880, 90
 DUR = 9.0                 # seconds per loop
-PX = 2                    # Pikachu pixel size (31x25 grid -> 62x50px)
+PX = 4                    # Pikachu pixel size (16x15 grid -> 64x60px)
 PIKA_HALF_W = PIKA_W * PX / 2
 PIKA_HALF_H = PIKA_H * PX / 2
 CY = H / 2                # Pikachu centre line
@@ -41,8 +41,8 @@ GAP = 80                  # Poke Ball centre trails Pikachu centre by this
 START = -PIKA_HALF_W - 10  # Pikachu centre at t=0 (just off-screen left)
 END = W + GAP + BALL_R + 20  # Pikachu centre at t=1 (ball fully off right)
 TRAVEL = END - START
-DOT_Y = CY + 2            # roughly mouth height
-MOUTH = PIKA_HALF_W - 6   # dot is eaten when it reaches this far ahead
+DOT_Y = CY + 10           # mouth height (sprite rows 9-10)
+MOUTH = PIKA_HALF_W - 14  # dot is eaten when it reaches this far ahead
 
 
 def _pct(v):
