@@ -1,207 +1,134 @@
 """Pixel-art Pikachu sprite shared by the SVG generators.
 
-Pikachu runs to the right in a side / three-quarter view. The sprite is built
-from layered parts (tail, limbs, torso, head) stacked back-to-front into four
-run frames. Each part gets its own 1px dark outline as it is stacked, which
-gives the clean silhouette plus the inner lines (chin, legs, arm) that make
-the pixel art read on both dark and light backgrounds.
+The pixel data was extracted once from a two-frame running-Pikachu GIF
+(30x30 grid of upscaled pixels): each cell was sampled, the background and
+watermark dropped, the colours snapped to the small palette below, both frames
+cropped to a common box and mirrored so the sprite faces right.
 
-`pikachu_svg(px)` returns an SVG <g> centred on (0, 0). Pixels shared by every
-frame are drawn once; the rest live in frame groups (classes `leg-a` ..
-`leg-d`) that `RUN_CSS` flips through.
+`pikachu_svg` returns an SVG <g> centred on (0, 0). Pixels shared by both
+frames are drawn once; the pixels that differ live in two frame groups
+(classes `leg-a` / `leg-b`) that `RUN_CSS` alternates.
 """
 
 COLORS = {
-    "O": "#2a1c00",  # outline
-    "N": "#2a1c00",  # nose / mouth
-    "K": "#1c1c1c",  # ear tips, eye
-    "W": "#ffffff",  # eye shine
-    "Y": "#f8d030",  # body
-    "y": "#d9a514",  # body shade / far limbs
-    "h": "#fff3a8",  # highlight
-    "R": "#e8402c",  # cheek
-    "B": "#a0601c",  # tail base / back stripes
+    "K": "#0c0401",  # outline
+    "Y": "#f8f202",  # body yellow
+    "L": "#ebec48",  # light yellow (edge highlight)
+    "O": "#fee434",  # orange-yellow shade
+    "C": "#eedc7b",  # cream
+    "N": "#8e6c00",  # nose
+    "B": "#754801",  # back stripes
+    "D": "#593f24",  # tail base
 }
 
-# Art area (the outline adds a 1px margin on every side).
-_ART_W, _ART_H = 29, 23
-
-# Parts are (top_row, rows). '.' is transparent; rows may be short.
-HEAD = (0, [  # ears, head and face
-    ".........KK..........K",
-    ".........KKKK........KK",
-    "..........KKYYY......KKK",
-    "............YYYYY....YYY",
-    "..............YYYYY.YYYYY",
-    "................YYYYYYYYY",
-    "................YYhhYYYYYYY",
-    "...............YYhYYYYYYYYYY",
-    "...............YYYYYYYYYWKYY",
-    "...............YYYYYYYYYKKYYY",
-    "...............YYYYYYYYYKKYYN",
-    "...............YYYYYYRRRYYYYY",
-    "...............YYYYYYRRRYYNN",
-    "................yyYYYYYYYYY",
-    "..................yyYYYYY",
-])
-
-TORSO = (13, [  # body with brown back stripes
-    ".............YYYYYYY",
-    "............YYYYYYYYY",
-    "...........BBBYYYYYYYY",
-    "...........YYYYYYYYYYY",
-    "...........BBBYYYYYYYY",
-    "...........YYYYYYYYYYY",
-    "............yyYYYYYYY",
-    ".............yyyYYYY",
-])
-
-TAIL = (5, [  # lightning bolt, brown at the base
-    ".YYY",
-    "YYYYYY",
-    ".YYYYYYY",
-    "..YYYYYYY",
-    "....YYYYY",
-    ".....YYYY",
-    "......YYYY",
-    "....YYYY",
-    "....YYY",
-    ".....YYY",
-    "......YYY",
-    ".......BBB",
-    "........BBB",
-])
-
-# Run cycle: near limbs in body yellow, far limbs in shade.
-FRAME_PARTS = [
-    {  # a: stride, near leg forward / far leg back, far paw reaching out
-        "tail_dy": 0,
-        "far_leg": (20, ["...........yyy", ".........yyy", ".......yyyy"]),
-        "far_arm": (15, ["......................yyy", ".......................yyy"]),
-        "near_leg": (20, ["...................YYY", "....................YYY",
-                          "......................YYYY"]),
-        "near_arm": None,
-    },
-    {  # b: passing, legs gathered, near foot lifted
-        "tail_dy": 1,
-        "far_leg": (20, [".............yyy", ".............yyy", "............yyyy"]),
-        "far_arm": None,
-        "near_leg": (20, [".................YYY", ".................YYYY"]),
-        "near_arm": (16, ["......................YYY", ".......................YY"]),
-    },
-    {  # c: stride, near leg back / far leg forward, near paw reaching out
-        "tail_dy": 0,
-        "far_leg": (20, ["..................yyy", "....................yyy",
-                         ".....................yyyy"]),
-        "far_arm": None,
-        "near_leg": (20, ["............YYY", "..........YYY", ".......YYYY"]),
-        "near_arm": (15, [".......................YYY", "........................YY"]),
-    },
-    {  # d: passing, near foot planted
-        "tail_dy": 1,
-        "far_leg": (20, ["..............yyy", "..............yyy", ".............yyyy"]),
-        "far_arm": None,
-        "near_leg": (20, [".................YYY", ".................YYY",
-                          ".................YYYY"]),
-        "near_arm": (16, ["......................YYY", ".......................YY"]),
-    },
+# "." is transparent. Both frames share the same grid and anchor.
+FRAME_A = [
+    ".....KK.........",
+    ".KKKKKKKKK......",
+    ".KLYLKKLLLKKK...",
+    "..KYYKCLYYYYLK..",
+    "...KLKKKLYYYYLK.",
+    "....KLLKYYYYYYK.",
+    "..KKKLKOOYYOKYLK",
+    "..KCCKKOOONOYYLK",
+    "...KBKDBBOOYYYK.",
+    "..KDDKCOOYOCKCK.",
+    "...KDKDBBYYKKLK.",
+    "...KKKKCLYYYLKK.",
+    "....KCKKLLLLKLLK",
+    ".....KLLKKKK.KK.",
+    "......KK........",
 ]
 
-WIDTH = _ART_W + 2   # grid size in pixels, outline margin included
-HEIGHT = _ART_H + 2
+FRAME_B = [
+    ".....KK.........",
+    "KKKKKKKKKK......",
+    "KLLYLKKLLLKKK...",
+    ".KYYYKCLYYYYLK..",
+    "..KLLKKKLYYYYLK.",
+    "...KYLLKYYYYYYK.",
+    ".KKKYLKOOYYOKYLK",
+    ".KCCCKKOOONOYYLK",
+    "..KBKKDBBOOYYYK.",
+    ".KDDKKCOOYOCKCK.",
+    "..KDDKDBBYYKKLK.",
+    "...KKKKCLYYYLLK.",
+    "......KKLLLLLK..",
+    "......KLKKKKKLK.",
+    "......KKKK.KKKK.",
+]
+
+WIDTH = len(FRAME_A[0])
+HEIGHT = len(FRAME_A)
 
 
-def _cells(part, dy=0):
-    if part is None:
-        return {}
-    top, rows = part
-    return {
-        (x + 1, top + y + dy + 1): ch
-        for y, row in enumerate(rows)
-        for x, ch in enumerate(row)
-        if ch != "."
-    }
+def _layers():
+    """Split the frames into (shared, only-A, only-B) pixel grids."""
+    shared, only_a, only_b = [], [], []
+    for row_a, row_b in zip(FRAME_A, FRAME_B):
+        s, a, b = [], [], []
+        for ca, cb in zip(row_a, row_b):
+            same = ca == cb
+            s.append(ca if same else ".")
+            a.append("." if same else ca)
+            b.append("." if same else cb)
+        shared.append("".join(s))
+        only_a.append("".join(a))
+        only_b.append("".join(b))
+    return shared, only_a, only_b
 
 
-def _compose(spec):
-    """Stack the parts back-to-front, outlining each one as it lands."""
-    layers = [
-        _cells(TAIL, spec["tail_dy"]),
-        _cells(spec["far_leg"]),
-        _cells(spec["far_arm"]),
-        _cells(spec["near_leg"]),
-        _cells(TORSO),
-        _cells(HEAD),
-        _cells(spec["near_arm"]),
-    ]
-    canvas = {}
-    for cells in layers:
-        for (x, y) in cells:
-            for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
-                if (nx, ny) not in cells:
-                    canvas[(nx, ny)] = "O"
-        canvas.update(cells)
-    return canvas
-
-
-FRAMES = [_compose(spec) for spec in FRAME_PARTS]
-
-
-def _rects(cells, px, ox, oy):
-    """Draw cells, merging horizontal runs of one colour into a single rect."""
+def _rects(rows, px, ox, oy):
+    """One <rect> per horizontal run of same-coloured pixels."""
     out = []
-    for y in range(HEIGHT):
+    for y, row in enumerate(rows):
         x = 0
-        while x < WIDTH:
-            ch = cells.get((x, y))
-            if ch is None:
-                x += 1
-                continue
-            x0 = x
-            while x < WIDTH and cells.get((x, y)) == ch:
-                x += 1
-            out.append(
-                f'<rect x="{ox + x0 * px:g}" y="{oy + y * px:g}" '
-                f'width="{(x - x0) * px:g}" height="{px:g}" fill="{COLORS[ch]}"/>'
-            )
+        while x < len(row):
+            ch = row[x]
+            end = x + 1
+            while end < len(row) and row[end] == ch:
+                end += 1
+            if ch in COLORS:
+                out.append(
+                    f'<rect x="{ox + x * px:g}" y="{oy + y * px:g}" '
+                    f'width="{(end - x) * px:g}" height="{px:g}" fill="{COLORS[ch]}"/>'
+                )
+            x = end
     return "".join(out)
 
 
-def _split():
-    """Cells identical in every frame, and what is left of each frame."""
-    common = {
-        pos: ch for pos, ch in FRAMES[0].items()
-        if all(f.get(pos) == ch for f in FRAMES[1:])
-    }
-    per = [{p: c for p, c in f.items() if p not in common} for f in FRAMES]
-    return common, per
-
-
-FRAME_CLASSES = ["leg-a", "leg-b", "leg-c", "leg-d"]
-CYCLE = 0.36  # seconds for one full run cycle
-
-
 def pikachu_svg(px=2.0):
-    """Return the sprite as an SVG group centred on the origin."""
+    """Return the sprite as an SVG group centred on the origin.
+
+    A thin light rim (an SVG filter) keeps the near-black outline readable
+    on dark backgrounds such as GitHub's dark theme.
+    """
     ox = -WIDTH * px / 2
     oy = -HEIGHT * px / 2
-    common, per = _split()
-    frames = "".join(
-        f'<g class="{cls}">{_rects(cells, px, ox, oy)}</g>'
-        for cls, cells in zip(FRAME_CLASSES, per)
+    rim = px * 0.5
+    shared, only_a, only_b = _layers()
+    return (
+        "<defs>"
+        '<filter id="pika-rim" x="-20%" y="-20%" width="140%" height="140%">'
+        f'<feMorphology in="SourceAlpha" operator="dilate" radius="{rim:g}" result="grow"/>'
+        '<feFlood flood-color="#fef3c7" flood-opacity=".85"/>'
+        '<feComposite in2="grow" operator="in" result="rim"/>'
+        '<feMerge><feMergeNode in="rim"/><feMergeNode in="SourceGraphic"/></feMerge>'
+        "</filter>"
+        "</defs>"
+        '<g shape-rendering="crispEdges" filter="url(#pika-rim)">'
+        f"{_rects(shared, px, ox, oy)}"
+        f'<g class="leg-a">{_rects(only_a, px, ox, oy)}</g>'
+        f'<g class="leg-b">{_rects(only_b, px, ox, oy)}</g>'
+        "</g>"
     )
-    return f'<g shape-rendering="crispEdges">{_rects(common, px, ox, oy)}{frames}</g>'
 
 
-def _run_css():
-    n = len(FRAME_CLASSES)
-    rules = [
-        f".{cls}{{animation:pkf {CYCLE:g}s steps(1) {-((n - i) % n) * CYCLE / n:.2f}s infinite}}"
-        for i, cls in enumerate(FRAME_CLASSES)
-    ]
-    rules.append(f"@keyframes pkf{{0%{{opacity:1}}{100 / n:g}%,100%{{opacity:0}}}}")
-    return "".join(rules)
-
-
-# CSS that flips through the run frames; include it in the generator's <style>.
-RUN_CSS = _run_css()
+# CSS that alternates the two run frames (0.2s each); include it in the
+# generator's <style>.
+RUN_CSS = (
+    ".leg-a{animation:legA .4s steps(1) infinite}"
+    ".leg-b{animation:legB .4s steps(1) infinite}"
+    "@keyframes legA{0%{opacity:1}50%{opacity:0}}"
+    "@keyframes legB{0%{opacity:0}50%{opacity:1}}"
+)
