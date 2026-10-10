@@ -18,13 +18,20 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from pikachu import HEIGHT as PIKA_H, WIDTH as PIKA_W, RUN_CSS, pikachu_svg  # noqa: E402
 
+# Brand palette (Tailwind): the name "Reduardo" is a pun on "red".
+RED = "#ef4444"      # red-500
+RED_D = "#dc2626"    # red-600
+ORANGE = "#f97316"   # orange-500
+AMBER = "#f59e0b"    # amber-500
+YELLOW = "#facc15"   # yellow-400
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ASSETS = os.path.join(ROOT, "assets")
 
 # ---------------------------------------------------------------- run strip
 W, H = 880, 90
 DUR = 9.0                 # seconds per loop
-PX = 3                    # Pikachu pixel size
+PX = 2                    # Pikachu pixel size (31x25 grid -> 62x50px)
 PIKA_HALF_W = PIKA_W * PX / 2
 PIKA_HALF_H = PIKA_H * PX / 2
 CY = H / 2                # Pikachu centre line
@@ -34,7 +41,7 @@ GAP = 80                  # Poke Ball centre trails Pikachu centre by this
 START = -PIKA_HALF_W - 10  # Pikachu centre at t=0 (just off-screen left)
 END = W + GAP + BALL_R + 20  # Pikachu centre at t=1 (ball fully off right)
 TRAVEL = END - START
-DOT_Y = CY + 5            # roughly mouth height
+DOT_Y = CY + 2            # roughly mouth height
 MOUTH = PIKA_HALF_W - 6   # dot is eaten when it reaches this far ahead
 
 
@@ -52,11 +59,12 @@ def _dots():
         big = i % 7 == 3
         if big:  # Pac-Man style "power pellet": a larger, pulsing yellow dot
             shapes.append(
-                f'<g class="d{i}"><circle class="pp" cx="{x}" cy="{DOT_Y}" r="6" fill="#ffde00"/></g>'
+                f'<g class="d{i}"><circle class="pp" cx="{x}" cy="{DOT_Y}" r="6" fill="{YELLOW}" '
+                f'stroke="{ORANGE}" stroke-width="1.5"/></g>'
             )
         else:
             shapes.append(
-                f'<circle class="d{i}" cx="{x}" cy="{DOT_Y}" r="3.5" fill="#ffde00"/>'
+                f'<circle class="d{i}" cx="{x}" cy="{DOT_Y}" r="3.5" fill="{YELLOW}"/>'
             )
         css.append(
             f".d{i}{{animation:e{i} {DUR}s linear infinite}}"
@@ -85,7 +93,7 @@ def _spark(x, y, s, cls):
     """Tiny lightning bolt polygon."""
     pts = [(0, 0), (4, 0), (2, 4), (5, 4), (-1, 11), (1, 6), (-2, 6)]
     p = " ".join(f"{x + a * s:g},{y + b * s:g}" for a, b in pts)
-    return f'<polygon class="{cls}" points="{p}" fill="#fff35c" stroke="#ffb300" stroke-width="0.6"/>'
+    return f'<polygon class="{cls}" points="{p}" fill="{YELLOW}" stroke="{ORANGE}" stroke-width="0.6"/>'
 
 
 def build_run():
@@ -127,15 +135,16 @@ def build_run():
     svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" role="img" aria-label="Pikachu running and eating dots, chased by a rolling Poke Ball">
 <title>Pikachu run</title>
 <style>{css}</style>
-<defs><clipPath id="bar"><rect width="{W}" height="{H}" rx="14"/></clipPath></defs>
+<defs><clipPath id="bar"><rect width="{W}" height="{H}" rx="14"/></clipPath>
+<linearGradient id="brand" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="{RED}"/><stop offset=".5" stop-color="{ORANGE}"/><stop offset="1" stop-color="{YELLOW}"/></linearGradient></defs>
 <rect width="{W}" height="{H}" rx="14" fill="#0b0b0f"/>
 <g clip-path="url(#bar)">
-<line class="glow" x1="0" y1="{GROUND + 1}" x2="{W}" y2="{GROUND + 1}" stroke="#ffde00" stroke-width="1" stroke-dasharray="2 6"/>
+<line class="glow" x1="0" y1="{GROUND + 1}" x2="{W}" y2="{GROUND + 1}" stroke="url(#brand)" stroke-width="1.2" stroke-dasharray="2 6"/>
 {dots}
 <g class="ball"><g transform="translate(0 {GROUND - BALL_R})"><g class="spin">{_pokeball(BALL_R)}</g></g></g>
 <g class="pika"><g transform="translate(0 {CY})"><g class="hop">{pikachu_svg(PX)}{sparks}</g></g></g>
 </g>
-<rect x="0.5" y="0.5" width="{W - 1}" height="{H - 1}" rx="13.5" fill="none" stroke="#ffde00" stroke-opacity=".25"/>
+<rect x="0.5" y="0.5" width="{W - 1}" height="{H - 1}" rx="13.5" fill="none" stroke="url(#brand)" stroke-opacity=".6"/>
 </svg>
 """
     return svg
@@ -167,21 +176,22 @@ def _message(x):
 def build_thanks():
     font = "'Comic Sans MS','Comic Neue','Trebuchet MS','Segoe UI',sans-serif"
     # Thin, semi-transparent dark outline: invisible on GitHub dark, but keeps
-    # the bright green / yellow legible on the light theme.
+    # the bright red -> orange -> yellow text legible on the light theme.
     outline = "paint-order:stroke;stroke:#0d1117;stroke-opacity:.55;stroke-linejoin:round"
     css = (
         f".m{{animation:marquee {MARQUEE_DUR}s linear infinite}}"
         f"@keyframes marquee{{from{{transform:translateX(0)}}"
         f"to{{transform:translateX(-{PERIOD}px)}}}}"
         f"text{{font-family:{font};font-weight:700}}"
-        f".t{{font-size:28px;fill:#39d353;stroke-width:2.5px;{outline}}}"
-        f".g{{font-size:16px;fill:#ffde00;stroke-width:2.5px;{outline}}}"
+        f".t{{font-size:28px;fill:url(#brand);stroke-width:2.5px;{outline}}}"
+        f".g{{font-size:16px;fill:{AMBER};stroke-width:2.5px;{outline}}}"
         ".z{animation:blink 1s steps(1) infinite}"
         "@keyframes blink{50%{opacity:.3}}"
     )
     svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="{TW}" height="{TH}" viewBox="0 0 {TW} {TH}" role="img" aria-label="{MSG} {TAG.replace("'", "&#39;")}">
 <title>Thanks for visiting</title>
 <style>{css}</style>
+<defs><linearGradient id="brand" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="{RED_D}"/><stop offset=".5" stop-color="{ORANGE}"/><stop offset="1" stop-color="{YELLOW}"/></linearGradient></defs>
 <g class="m">{_message(X0)}{_message(X0 + PERIOD)}</g>
 </svg>
 """
